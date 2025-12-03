@@ -1,0 +1,46 @@
+2025-12-03 13:39:02.554 [main] DEBUG com.example.BasicLoggingExample - Debug Message - for debugging
+2025-12-03 13:39:02.556 [main] INFO  com.example.BasicLoggingExample - Info Message - general information
+2025-12-03 13:39:02.557 [main] WARN  com.example.BasicLoggingExample - Warning Message - Potential Problem
+2025-12-03 13:39:02.557 [main] ERROR com.example.BasicLoggingExample - Error message - Something went wrong
+2025-12-03 13:39:02.557 [main] INFO  com.example.BasicLoggingExample - User John with ID logged in
+2025-12-03 13:39:02.561 [main] ERROR com.example.BasicLoggingExample - An error occured while processing
+java.lang.RuntimeException: Something went wrong
+	at com.example.BasicLoggingExample.demonstrateLogging(BasicLoggingExample.java:26)
+	at com.example.BasicLoggingExample.main(BasicLoggingExample.java:35)
+2025-12-03 13:44:31.163 [main] DEBUG com.example.BasicLoggingExample - Debug Message - for debugging
+2025-12-03 13:44:31.166 [main] INFO  com.example.BasicLoggingExample - Info Message - general information
+2025-12-03 13:44:31.167 [main] WARN  com.example.BasicLoggingExample - Warning Message - Potential Problem
+2025-12-03 13:44:31.167 [main] ERROR com.example.BasicLoggingExample - Error message - Something went wrong
+2025-12-03 13:44:31.167 [main] INFO  com.example.BasicLoggingExample - User John with ID logged in
+2025-12-03 13:44:31.167 [main] ERROR com.example.BasicLoggingExample - An error occured while processing
+java.lang.RuntimeException: Something went wrong
+	at com.example.BasicLoggingExample.demonstrateLogging(BasicLoggingExample.java:26)
+	at com.example.BasicLoggingExample.main(BasicLoggingExample.java:35)
+2025-12-03 13:47:23.442 [main] DEBUG com.example.BasicLoggingExample - Debug Message - for debugging
+2025-12-03 13:47:23.445 [main] INFO  com.example.BasicLoggingExample - Info Message - general information
+2025-12-03 13:47:23.445 [main] WARN  com.example.BasicLoggingExample - Warning Message - Potential Problem
+2025-12-03 13:47:23.446 [main] ERROR com.example.BasicLoggingExample - Error message - Something went wrong
+2025-12-03 13:47:23.446 [main] INFO  com.example.BasicLoggingExample - User John with ID logged in
+2025-12-03 13:47:23.450 [main] ERROR com.example.BasicLoggingExample - An error occured while processing
+java.lang.RuntimeException: Something went wrong
+	at com.example.BasicLoggingExample.demonstrateLogging(BasicLoggingExample.java:26)
+	at com.example.BasicLoggingExample.main(BasicLoggingExample.java:35)
+2025-12-03 13:52:33.365 [main] INFO  com.example.LoggingApp - ===Application Started===
+2025-12-03 13:52:33.381 [main] INFO  com.example.LoggingApp - Logging to the file with rolling
+2025-12-03 13:52:33.381 [main] INFO  com.example.LoggingApp - Processing order: 001
+2025-12-03 13:52:33.490 [main] DEBUG com.example.LoggingApp - Order 001 processed successfully
+2025-12-03 13:52:33.491 [main] INFO  com.example.LoggingApp - Processing order: 002
+2025-12-03 13:52:33.601 [main] DEBUG com.example.LoggingApp - Order 002 processed successfully
+2025-12-03 13:52:52.655 [main] INFO  com.example.LoggingApp - ===Application Started===
+2025-12-03 13:52:52.657 [main] INFO  com.example.LoggingApp - Logging to the file with rolling
+2025-12-03 13:52:52.658 [main] INFO  com.example.LoggingApp - Processing order: 001
+2025-12-03 13:52:52.771 [main] ERROR com.example.LoggingApp - Failed to process order 001
+java.lang.InterruptedException: null
+	at com.example.LoggingApp.processOrder(LoggingApp.java:25)
+	at com.example.LoggingApp.main(LoggingApp.java:15)
+2025-12-03 13:52:52.772 [main] INFO  com.example.LoggingApp - Processing order: 002
+2025-12-03 13:52:52.773 [main] ERROR com.example.LoggingApp - Failed to process order 002
+java.lang.InterruptedException: sleep interrupted
+	at java.base/java.lang.Thread.sleep(Native Method)
+	at com.example.LoggingApp.processOrder(LoggingApp.java:24)
+	at com.example.LoggingApp.main(LoggingApp.java:16)

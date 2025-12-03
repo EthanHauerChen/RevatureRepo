@@ -1,0 +1,13 @@
+2025-12-03 13:54:12.488 [main] INFO  com.example.LoggingApp - ===Application Started===
+2025-12-03 13:54:12.488 [main] INFO  com.example.LoggingApp - Logging to the file with rolling
+2025-12-03 13:54:12.488 [main] INFO  com.example.LoggingApp - Processing order: 001
+2025-12-03 13:54:12.602 [main] ERROR com.example.LoggingApp - Failed to process order 001
+java.lang.InterruptedException: null
+	at com.example.LoggingApp.processOrder(LoggingApp.java:25)
+	at com.example.LoggingApp.main(LoggingApp.java:15)
+2025-12-03 13:54:12.603 [main] INFO  com.example.LoggingApp - Processing order: 002
+2025-12-03 13:54:12.604 [main] ERROR com.example.LoggingApp - Failed to process order 002
+java.lang.InterruptedException: sleep interrupted
+	at java.base/java.lang.Thread.sleep(Native Method)
+	at com.example.LoggingApp.processOrder(LoggingApp.java:24)
+	at com.example.LoggingApp.main(LoggingApp.java:16)

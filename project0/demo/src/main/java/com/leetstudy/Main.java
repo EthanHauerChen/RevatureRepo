@@ -1,4 +1,4 @@
-package com.leetcoding;
+package com.leetstudy;
 
 /**
  * MAIN IDEA:
@@ -15,7 +15,17 @@ package com.leetcoding;
  */
 
 public class Main {
+    HashMap<Integer, Problem> problems; //how should it be ID
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        showMenu();
+    }
+
+    private void showMenu() {
+        //user selects add leetcode problem
+        Problem p = new Problem(user given input);
+
+        //user selects upload solution, should provide file path
+        ask if relative path or absolute path
+        if ()
     }
 }

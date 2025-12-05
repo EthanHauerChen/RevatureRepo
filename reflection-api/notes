@@ -1,0 +1,3 @@
+Java reflection API
+analysis of objects, components during runtime, allowing dynamic analysis instead of static
+used very very often in frameworks

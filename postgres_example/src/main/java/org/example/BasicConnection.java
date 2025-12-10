@@ -10,14 +10,16 @@ public class BasicConnection {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "secret";
+    //should not hardcode password, should save elswhere like env variable or something
+    private static final String PASSWORD = "postgres";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
     public static void main(String[] args) {
-        try(Connection conn = getConnection()){
+        //try with resources since connection is a stream that must be closed
+        try(Connection conn = getConnection()){ //DriverManager.getConnection(...)
 
             System.out.println("Connected to Postgresql!");
             System.out.println("Database: " + conn.getMetaData().getDatabaseProductName());

@@ -15,6 +15,7 @@
     </properties>
 
     <dependencies>
+        <!-- maven package containing the postgresql db driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

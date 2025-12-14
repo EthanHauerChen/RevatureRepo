@@ -1,0 +1,16 @@
+should Connection be in the interface?
+pros: all DAOs should have a connection, so makes sense
+cons: connection would have to be public
+
+datatype for BLOB in SolutionEntity?
+
+how to deal with sql table containing null values, how to save into entity
+
+try to get rid of nulls
+use defaults
+byteStream for BLOB
+"scaled up" would save it in some cloud bucket format
+
+
+open file in editor tab
+open url in browser

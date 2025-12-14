@@ -5,6 +5,7 @@ import java.util.Objects;
 public class EmployeeEntity {
     private Integer id;
     private String fullName;
+    //FK entities as the IDs (PK attributes) instead of the entire object. Entire object is also a valid choice
     private Integer departmentId;
     private Integer locationId;
 

@@ -11,11 +11,13 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 //        System.out.println(ConnectionHandler.getConnection());
 
-//        DepartmentDAO departmentDAO = new DepartmentDAO();
-
-        EmployeeService employeeService = new EmployeeService();
-
-        employeeService.getModelById(1);
+        DepartmentDAO departmentDAO = new DepartmentDAO();
+//        System.out.println(departmentDAO.findAll());
+//        int id = departmentDAO.create(new DepartmentEntity(-1, "Evil")); //DAO.create only cares about name, so id could be any number
+//        System.out.println(departmentDAO.findById(id));
+//        EmployeeService employeeService = new EmployeeService();
+//
+//        employeeService.getModelById(1);
 
 
 

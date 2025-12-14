@@ -44,6 +44,7 @@ public class DepartmentEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DepartmentEntity that = (DepartmentEntity) o;
+        //Objects.equals instead of id == that.id to avoid NullPointerException in case one of the ids is null
         return Objects.equals(id, that.id) && Objects.equals(department, that.department);
     }
 

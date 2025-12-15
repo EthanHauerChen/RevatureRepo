@@ -4,6 +4,7 @@ import org.leetrepository.repository.entities.ProblemEntity;
 import org.leetrepository.util.ConnectionHandler;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,18 +17,9 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, entity.getId());
             stmt.setString(2, entity.getName());
-            if (entity.getDescription() == null)
-                stmt.setNull(3, Types.VARCHAR)
-            else
-                stmt.setString(3, entity.getDescription());
-            if (entity.getDifficulty() == null)
-                stmt.setNull(4, Types.VARCHAR);
-            else
-                stmt.setString(4, entity.getDifficulty());
-            if (entity.getUrl() == null)
-                stmt.setNull(5, Types.VARCHAR);
-            else
-                stmt.setString(5, entity.getUrl());
+            stmt.setString(3, entity.getDescription());
+            stmt.setObject(4, entity.getDifficulty(), Types.OTHER); //can't use setString because difficulty is an ENUM type
+            stmt.setString(5, entity.getUrl());
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) return rs.getInt("id");
@@ -38,7 +30,7 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
 
     @Override
     public Optional<ProblemEntity> findById(int id) throws SQLException {
-        String sql = "SELECT * FROM problem WHERE id = ?";
+        String sql = "SELECT * FROM problem WHERE id = ?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
 
@@ -47,25 +39,78 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
                     ProblemEntity entity = new ProblemEntity();
                     entity.setId(rs.getInt("id"));
                     entity.setName(rs.getString("name"));
-                    if (rs.getString("description") == null)
-                        entity.getName
+                    entity.setDescription(rs.getString("description"));
+                    entity.setDifficulty(rs.getString("difficulty"));
+                    entity.setUrl(rs.getString("url"));
+                    return Optional.of(entity);
                 }
             }
         }
+
+        return Optional.empty();
     }
 
     @Override
     public List<ProblemEntity> findAll() throws SQLException {
-        return null;
+        List<ProblemEntity> problemEntities = new ArrayList<>();
+        String sql = "SELECT * FROM problem;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) { //could also use createStatement here. when to use which: https://www.baeldung.com/java-statement-preparedstatement
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ProblemEntity entity = new ProblemEntity();
+                    entity.setId(rs.getInt("id"));
+                    entity.setName(rs.getString("name"));
+                    entity.setDescription(rs.getString("description"));
+                    entity.setDifficulty(rs.getString("difficulty"));
+                    entity.setUrl(rs.getString("url"));
+                    problemEntities.add(entity);
+                }
+            }
+        }
+
+        return problemEntities;
     }
 
     @Override
-    public ProblemEntity updateById(ProblemEntity entity) throws SQLException {
-        return null;
+    public Optional<ProblemEntity> updateById(ProblemEntity entity) throws SQLException {
+        String sql = "UPDATE problem SET name = ?, description = ?, difficulty = ?, url = ? WHERE id = ? RETURNING *;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, entity.getName());
+            stmt.setString(2, entity.getDescription());
+            stmt.setObject(3, entity.getDifficulty(), Types.OTHER);
+            stmt.setString(4, entity.getUrl());
+            stmt.setInt(5, entity.getId());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) { //return ProblemEntity constructed from rs to verify
+                    return Optional.of(constructEntity(rs));
+                }
+            }
+        }
+
+        return Optional.empty();
     }
 
     @Override
-    public ProblemEntity deleteById(int id) throws SQLException {
-        return null;
+    public Optional<ProblemEntity> deleteById(int id) throws SQLException {
+        String sql = "DELETE FROM problem where id = ? RETURNING *;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return Optional.of(constructEntity(rs));
+            }
+        }
+        return Optional.empty();
+    }
+
+    private ProblemEntity constructEntity(ResultSet rs) throws SQLException {
+        ProblemEntity problemEntity = new ProblemEntity();
+        problemEntity.setId(rs.getInt("id"));
+        problemEntity.setName(rs.getString("name"));
+        problemEntity.setDescription(rs.getString("description"));
+        problemEntity.setDifficulty(rs.getString("difficulty"));
+        problemEntity.setUrl(rs.getString("url"));
+        return problemEntity;
     }
 }

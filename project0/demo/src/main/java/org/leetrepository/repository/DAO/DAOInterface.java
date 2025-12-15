@@ -17,9 +17,9 @@ public interface DAOInterface<T> {
     public List<T> findAll() throws SQLException;
 
     //update
-    public T updateById(T entity) throws SQLException;
+    public Optional<T> updateById(T entity) throws SQLException;
 
     //delete
-    public T deleteById(int id) throws SQLException;
+    public Optional<T> deleteById(int id) throws SQLException;
 
 }

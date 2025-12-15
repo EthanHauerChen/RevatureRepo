@@ -9,11 +9,22 @@ public class ProblemEntity {
     private String difficulty;
     private String url;
 
-    public ProblemEntity() {}
+    public ProblemEntity() {
+        /**
+         * rather than initializing columns to their default values,
+         * the DAO will instead fill in NULL for the values, causing it
+         * to throw a SQLException or NullPointerException in order to "fail early, fail fast"
+         */
+    }
 
     public ProblemEntity(int id, String name) {
         this.id = id;
         this.name = name;
+        /**
+         * rather than initializing columns to their default values,
+         * the DAO will instead fill in NULL for the values, causing it
+         * to throw a SQLException or NullPointerException in order to "fail early, fail fast"
+         */
     }
 
     public ProblemEntity(int id, String name, String description, String difficulty, String url) {

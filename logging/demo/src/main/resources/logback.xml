@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://logback.qos.ch/manual/configuration.html#syntax-->
+<!-- config file for loggers. when a logger object is created, the appenders below will send the log
+    to the relevant output files/streams
+-->
+<configuration>
+
+    <!--https://logback.qos.ch/manual/configuration.html#definingProps
+        property tags are variables with name and value
+    -->
+    <property name="LOG_DIR" value="maven-project/logs"/>
+    <property name="APP_NAME" value="myapp"/>
+
+    <!-- Console Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender with rolling save -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Current log file -->
+        <file>${LOG_DIR}/${APP_NAME}.log</file>
+
+        <!-- Rolling Policy -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Archive file pattern -->
+            <fileNamePattern>${LOG_DIR}/${APP_NAME}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Keep 7 days of history -->
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+
+    <!-- Root Logger, by default if no other logger is specified during object creation,
+        loggers will be created with the settings stated inside the root tag -->
+    <root level="DEBUG">
+        <!-- probably: reference to which appenders are used-->
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

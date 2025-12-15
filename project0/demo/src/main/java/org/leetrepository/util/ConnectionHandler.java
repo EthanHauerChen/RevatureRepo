@@ -45,7 +45,7 @@ public class ConnectionHandler {
                     properties.load(input);
                 }
 
-                /** Load JDBC Driver
+                /** Load/Register JDBC Driver
                  * determines the db.driver property from database.properties=org.postgresql.Driver
                  * gets the driver class located in the postgresql maven package
                  * (see pom.xml - dependencies - org.postgresql)

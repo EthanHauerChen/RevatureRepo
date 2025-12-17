@@ -21,7 +21,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
+//@ExtendWith is a Junit annotation that enables extension of test classes with custom logic or other tools, in this case Mockito
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
 
@@ -38,6 +38,17 @@ public class EmployeeServiceTest {
     @Mock
     private DepartmentService departmentService;
 
+    /** uses other mock objects and injects them into another mock object
+     * that depends on the other mock objects, either via constructor, getters+setters, or by each field.
+     * Running the test using the "play" button in intellij on the specific @Test method works, but there will
+     * be an error if running 'mvn test' as Mockito attempts to inject mocks in the following order:
+     * - Constructor
+     * - Getters, Setters
+     * - Fields
+     * and since inside of EmployeeService.java, there is no constructor or getters and setters, and since
+     * the fields are initialized inline, an error is thrown since Mockito will fail to inject the mock objects
+     * into these fields as they are already initialized
+     */
     @InjectMocks
     private EmployeeService employeeService;
 
@@ -49,6 +60,7 @@ public class EmployeeServiceTest {
     private DepartmentEntity testDepartmentEntity;
     private Department testDepartmentModel;
 
+    //runs before each test is executed
     @BeforeEach
     void setup(){
         // Setup Test EmployeeEntity

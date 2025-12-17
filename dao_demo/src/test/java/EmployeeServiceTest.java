@@ -21,9 +21,14 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
 
+    /**
+     * create mock object with @Mock annotation
+     * https://dzone.com/refcardz/mockito#section-3
+     */
     @Mock
     private EmployeeDAO employeeDAO;
 
@@ -96,6 +101,9 @@ public class EmployeeServiceTest {
         // Arrange
         // We have to prepare the test for the actual scenario we want to test for
         when(employeeDAO.create(testEmployeeEntity)).thenReturn(100);
+        /** stubbing: defining behavior we want a mock object to exhibit for a specific test
+         * https://dzone.com/refcardz/mockito#section-4
+         */
 
         // Act
         // We use the method as we have mocked

@@ -21,7 +21,12 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-//@ExtendWith is a Junit annotation that enables extension of test classes with custom logic or other tools, in this case Mockito
+
+/**
+ * https://www.javaguides.net/2023/10/mockito-extendwith-example.html
+ * ExtendWith integrates Mockito with JUnit 5, enabling Mockito-specific features.
+ * This annotation lets us avoid initialization mock objects manually
+ */
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceTest {
 

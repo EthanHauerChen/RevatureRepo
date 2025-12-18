@@ -1,8 +1,12 @@
 package org.leetrepository;
 
+import org.leetrepository.controller.ProblemController;
 import org.leetrepository.repository.DAO.ProblemDAO;
+import org.leetrepository.repository.DAO.TopicDAO;
 import org.leetrepository.repository.entities.ProblemEntity;
+import org.leetrepository.repository.entities.TopicEntity;
 import org.leetrepository.util.ConnectionHandler;
+import org.leetrepository.util.InputHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,87 +18,113 @@ import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
-        ProblemDAO problemDAO = new ProblemDAO();
-
-        //test findById
-//        try {
-//            Optional<ProblemEntity> entity = problemDAO.findById(1);
-//            System.out.println(entity);
-//            entity = problemDAO.findById(99999); //should return Optional.empty
-//            System.out.println(entity);
-//        }
-//        catch (SQLException e) {
-//            System.out.println("SQL Exception");
-//            e.printStackTrace();
-//        }
-
-        //test create
-//        try {
-//            ProblemEntity problemEntity = new ProblemEntity();
-//            problemEntity.setId(371);
-//            problemEntity.setName("Sum of Two Integers");
-//            problemEntity.setDescription("Given two integers a and b, return the sum of the two integers without using the operators + and -.");
-//            problemEntity.setDifficulty("Medium");
-//            problemEntity.setUrl("https://leetcode.com/problems/sum-of-two-integers");
-//            int id = problemDAO.create(problemEntity);
-//            int id = problemDAO.create(problemEntity); //should throw SQLException
-//            System.out.println("created ProblemEntity with id: " + id);
-//            System.out.println("find ProblemEntity by id " + id + ": " + problemDAO.findById(id));
+//        System.out.println("======Welcome to the LeetCode Repository. This tracks all your LeetCode problems and solutions======");
+//        ProblemController problemController = new ProblemController();
+//        SolutionController solutionController = new SolutionController();
 //
-//
-//        }
-//        catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-
-        //test findAll
-//        try {
-//            List<ProblemEntity> problemEntities = problemDAO.findAll();
-//            for (ProblemEntity p : problemEntities) {
-//                System.out.println(p);
+//        boolean running = true;
+//        while(running){
+//            printMenu();
+//            int choice = InputHandler.getIntInput("Make a choice: ");
+//            switch(choice){
+//                case 1 -> problemController.handleInput();
+//                case 2 -> solutionController.handleInput();
+//                case 0 -> {
+//                    System.out.println("Goodbye!");
+//                    running = false;
+//                }
 //            }
 //        }
+
+        TopicDAO topicDAO = new TopicDAO();
+        //test findAll topics
+//        try {
+//            System.out.println(topicDAO.findAll());
+//        }
 //        catch (SQLException e) {
 //            e.printStackTrace();
 //        }
-
-        //test updateById
+        //test create success
 //        try {
-//            ProblemEntity p = new ProblemEntity();
-//            p.setId(1);
-//            p.setName("Two Sum");
-//            p.setDescription("Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n" +
-//                    "\n" +
-//                    "You may assume that each input would have exactly one solution, and you may not use the same element twice.\n" +
-//                    "\n" +
-//                    "You can return the answer in any order."
-//            );
-//            p.setDifficulty("Unspecified");
-//            p.setUrl("https://leetcode.com/problemset");
-//            System.out.println(problemDAO.updateById(p));
+//            TopicEntity t1 = new TopicEntity("Math");
+//            int id1 = topicDAO.create(t1);
+//            int id2 = topicDAO.create("Graph");
+//            TopicEntity topic1 = topicDAO.findById(id1).get();
+//            TopicEntity topic2 = topicDAO.findById(id2).get();
+//            System.out.println("Test create with entity: " + id1 + topic1);
+//            System.out.println("test create with String: " + id2 + topic2);
 //        }
-//        catch (Exception e) {
+//        catch (SQLException e) {
 //            e.printStackTrace();
 //        }
-
-        //test deleteById
+        //test create failure
 //        try {
-//            //create the entity to be deleted
-//            ProblemEntity p = new ProblemEntity(
-//                    99999,
-//                    "test problem",
-//                    "description",
-//                    "Unspecified",
-//                    "blah"
-//            );
-//            System.out.println("Successfully created entity with id " + problemDAO.create(p));
-//
-//            //delete the entity, verify
-//            System.out.println(problemDAO.deleteById(p.getId()));
-//            System.out.println(problemDAO.findById(p.getId()));
+//            TopicEntity t1 = new TopicEntity("Math");
+//            int id1 = topicDAO.create(t1);
+//            System.out.println("Should not be printed, Math topic already exists, should've thrown error" + id1);
 //        }
-//        catch (Exception e) {
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//            System.out.println("Properly threw error");
+//        }
+        //test find success
+//        try {
+//            TopicEntity t1 = topicDAO.findById(12).get();
+//            System.out.println(t1);
+//            List<TopicEntity> list = topicDAO.findAll();
+//            System.out.println(list);
+//        }
+//        catch (SQLException e) {
 //            e.printStackTrace();
 //        }
+        //test find failure
+//        try {
+//            Optional<TopicEntity> t1 = topicDAO.findById(9999999);
+//            System.out.println(t1);
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        //test update success
+//        try {
+//            int id = topicDAO.create("Enumerattion");
+//            TopicEntity t = new TopicEntity(id, "Enumeration");
+//            System.out.println("Before update " + topicDAO.findById(id));
+//            System.out.println("After update " + topicDAO.updateById(t));
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        //test update failure
+//        try {
+//            TopicEntity t = new TopicEntity(9999, "asfoijawe");
+//            System.out.println(topicDAO.updateById(t));
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        //test delete success
+//        try {
+//            System.out.println(topicDAO.deleteById(25));
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        //test delete failure
+        try {
+            System.out.println(topicDAO.deleteById(99999));
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void printMenu() {
+        System.out.println("=== MAIN MENU ===");
+        System.out.println("1. Problem Menu");
+        System.out.println("\tadd or edit a LeetCode problem");
+        System.out.println("2. Solution Menu");
+        System.out.println("\tadd or edit a LeetCode solution");
+        System.out.println("0. Exit");
     }
 }

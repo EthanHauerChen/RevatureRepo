@@ -9,6 +9,10 @@ public class TopicEntity {
     public TopicEntity() {
     }
 
+    public TopicEntity(String name) {
+        this.name = name;
+    }
+
     public TopicEntity(int id, String name) {
         this.id = id;
         this.name = name;

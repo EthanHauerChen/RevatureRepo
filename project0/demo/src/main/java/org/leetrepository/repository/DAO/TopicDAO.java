@@ -1,5 +1,6 @@
 package org.leetrepository.repository.DAO;
 
+import org.leetrepository.repository.entities.ProblemEntity;
 import org.leetrepository.repository.entities.TopicEntity;
 import org.leetrepository.repository.entities.TopicEntity;
 import org.leetrepository.util.ConnectionHandler;
@@ -53,6 +54,23 @@ public class TopicDAO implements DAOInterface<TopicEntity> {
         return Optional.empty();
     }
 
+    public List<TopicEntity> findByName(String name) throws SQLException {
+        List<TopicEntity> topicEntities = new ArrayList<>();
+        String sql = "SELECT * FROM topic WHERE name ILIKE ?;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, "%" + name + "%");
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    TopicEntity entity = constructEntity(rs);
+                    topicEntities.add(entity);
+                }
+            }
+        }
+
+        return topicEntities;
+    }
+
     @Override
     public List<TopicEntity> findAll() throws SQLException {
         List<TopicEntity> topicEntities = new ArrayList<>();
@@ -66,6 +84,25 @@ public class TopicDAO implements DAOInterface<TopicEntity> {
             }
         }
 
+        return topicEntities;
+    }
+
+    public List<TopicEntity> findTopicsForProblem(ProblemEntity problem) throws SQLException {
+        List<TopicEntity> topicEntities = new ArrayList<>();
+        String sql = "SELECT t.* " +
+                "FROM problem p, topic t, problem_topic pt " +
+                "WHERE p.id = ? " +
+                "AND p.id = pt.problem_id " +
+                "AND t.id = pt.topic_id;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, problem.getId());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    topicEntities.add(constructEntity(rs));
+                }
+            }
+        }
         return topicEntities;
     }
 

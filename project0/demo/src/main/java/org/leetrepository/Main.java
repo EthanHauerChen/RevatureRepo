@@ -37,6 +37,7 @@ public class Main {
 //        }
 
         TopicDAO topicDAO = new TopicDAO();
+        ProblemDAO problemDAO = new ProblemDAO();
         //test findAll topics
 //        try {
 //            System.out.println(topicDAO.findAll());
@@ -111,12 +112,52 @@ public class Main {
 //            e.printStackTrace();
 //        }
         //test delete failure
+//        try {
+//            System.out.println(topicDAO.deleteById(99999));
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        //test problem getByName
+//        ProblemDAO problemDAO = new ProblemDAO();
+//        try {
+//            System.out.println(problemDAO.findByName("sasdfum"));
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+        //test topic findByName
+//        try {
+//            System.out.println(topicDAO.findByName("seasdfasfdarch"));
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+        //test problem find problems related to topic
+//        try {
+//            TopicEntity topic = topicDAO.findByName("Graph").get(0);
+//            System.out.println(problemDAO.findProblemsForTopic(topic));
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+        //test add topic to problem
         try {
-            System.out.println(topicDAO.deleteById(99999));
+            ProblemEntity problem = problemDAO.findByName("Reverse words").get(0);
+            TopicEntity topic = topicDAO.findByName("Two Pointers").get(0);
+            problemDAO.addTopicToProblem(problem, topic);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+        catch (SQLException e) { e.printStackTrace(); }
+        //test find topics for a given problem
+//        try {
+//            ProblemEntity problem = problemDAO.findByName("Climbing").get(0);
+//            System.out.println(topicDAO.findTopicsForProblem(problem));
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+        //test adding multiple topics to problem
+//        try {
+//            ProblemEntity problem = problemDAO.findByName("Sum of Two Integers").get(0);
+//            List<TopicEntity> topics = new ArrayList<>();
+//            topics.add(topicDAO.findByName("Math").get(0));
+//            topics.add(topicDAO.findByName("Bit Manipulation").get(0));
+//            problemDAO.addTopicsToProblem(problem, topics);
+//            System.out.println(topicDAO.findTopicsForProblem(problem));
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
     }
 
     private static void printMenu() {

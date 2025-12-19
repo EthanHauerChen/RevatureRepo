@@ -1,8 +1,10 @@
 package org.leetrepository.repository.DAO;
 
 import org.leetrepository.repository.entities.ProblemEntity;
+import org.leetrepository.repository.entities.TopicEntity;
 import org.leetrepository.util.ConnectionHandler;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,23 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
         return Optional.empty();
     }
 
+    public List<ProblemEntity> findByName(String name) throws SQLException {
+        List<ProblemEntity> problemEntities = new ArrayList<>();
+        String sql = "SELECT * FROM problem WHERE name ILIKE ?;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, "%" + name + "%");
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ProblemEntity entity = constructEntity(rs);
+                    problemEntities.add(entity);
+                }
+            }
+        }
+
+        return problemEntities;
+    }
+
     @Override
     public List<ProblemEntity> findAll() throws SQLException {
         List<ProblemEntity> problemEntities = new ArrayList<>();
@@ -71,6 +90,25 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
         return problemEntities;
     }
 
+    public List<ProblemEntity> findProblemsForTopic(TopicEntity entity) throws SQLException {
+        List<ProblemEntity> problemEntities = new ArrayList<>();
+        String sql = "SELECT p.* " +
+                    "FROM problem p, topic t, problem_topic pt " +
+                    "WHERE t.id = ? " +
+                    "AND p.id = pt.problem_id " +
+                    "AND t.id = pt.topic_id;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, entity.getId());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    problemEntities.add(constructEntity(rs));
+                }
+            }
+        }
+        return problemEntities;
+    }
+
     @Override
     public Optional<ProblemEntity> updateById(ProblemEntity entity) throws SQLException {
         String sql = "UPDATE problem SET name = ?, description = ?, difficulty = ?, url = ? WHERE id = ? RETURNING *;";
@@ -89,6 +127,32 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
         }
 
         return Optional.empty();
+    }
+
+    public void addTopicToProblem(ProblemEntity problem, TopicEntity topic) throws SQLException {
+        String sql = "INSERT INTO problem_topic values (?, ?);";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, problem.getId());
+            stmt.setInt(2, topic.getId());
+
+            stmt.executeUpdate(); //if failure, exception will be thrown
+        }
+    }
+
+    public void addTopicsToProblem(ProblemEntity problem, List<TopicEntity> topics) throws SQLException {
+        StringBuilder sb = new StringBuilder("INSERT INTO problem_topic values ");
+        for (int i = 0; i < topics.size(); i++) {
+            sb.append("(?, ?), ");
+        }
+        sb.delete(sb.length() - 2, sb.length()).append(";"); //chop off trailing comma, then add semicolon
+        String sql = sb.toString();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            for (int i = 0; i < topics.size(); i++) {
+                stmt.setInt(2 * i + 1, problem.getId());
+                stmt.setInt(2 * i + 2, topics.get(i).getId());
+            }
+            stmt.executeUpdate(); //if failure, exception will be thrown
+        }
     }
 
     @Override

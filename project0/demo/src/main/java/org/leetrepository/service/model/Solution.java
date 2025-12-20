@@ -1,39 +1,39 @@
-package org.leetrepository.repository.entities;
+package org.leetrepository.service.model;
 
 import java.nio.ByteBuffer;
-import java.util.Objects;
 
-public class SolutionEntity {
+public class Solution {
     private int id;
-    private int problemId;
+    private Problem problem;
     private String name;
     private String description;
     private ByteBuffer solutionCode;
 
-    public SolutionEntity() {
+    public Solution() {
     }
-    public SolutionEntity(int problemId, String name, String description) {
-        this.problemId = problemId;
-        this.name = name;
-        this.description = description;
-    }
-    public SolutionEntity(int problemId, String name, String description, ByteBuffer solutionCode) {
-        this.problemId = problemId;
+
+    public Solution(int id, Problem problem, String name, String description, ByteBuffer solutionCode) {
+        this.id = id;
+        this.problem = problem;
         this.name = name;
         this.description = description;
         this.solutionCode = solutionCode;
     }
 
-    public int getId() { return id; }
-
-    public void setId(int id) { this.id = id; };
-
-    public int getProblemId() {
-        return problemId;
+    public int getId() {
+        return id;
     }
 
-    public void setProblemId(int problemId) {
-        this.problemId = problemId;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Problem getProblem() {
+        return problem;
+    }
+
+    public void setProblem(Problem problem) {
+        this.problem = problem;
     }
 
     public String getName() {
@@ -65,9 +65,9 @@ public class SolutionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SolutionEntity that = (SolutionEntity) o;
+        Solution solution = (Solution) o;
 
-        return getId() == that.getId();
+        return getId() == solution.getId();
     }
 
     @Override
@@ -77,9 +77,9 @@ public class SolutionEntity {
 
     @Override
     public String toString() {
-        return "SolutionEntity{" +
+        return "Solution{" +
                 "id=" + id +
-                ", problemId=" + problemId +
+                ", problem=" + problem +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", solutionCode=" + solutionCode +

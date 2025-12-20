@@ -87,7 +87,7 @@ public class TopicDAO implements DAOInterface<TopicEntity> {
         return topicEntities;
     }
 
-    public List<TopicEntity> findTopicsForProblem(ProblemEntity problem) throws SQLException {
+    public List<TopicEntity> findTopicsGivenProblem(ProblemEntity problem) throws SQLException {
         List<TopicEntity> topicEntities = new ArrayList<>();
         String sql = "SELECT t.* " +
                 "FROM problem p, topic t, problem_topic pt " +

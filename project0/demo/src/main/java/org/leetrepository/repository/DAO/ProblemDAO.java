@@ -90,7 +90,7 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
         return problemEntities;
     }
 
-    public List<ProblemEntity> findProblemsForTopic(TopicEntity entity) throws SQLException {
+    public List<ProblemEntity> findProblemsGivenTopic(TopicEntity entity) throws SQLException {
         List<ProblemEntity> problemEntities = new ArrayList<>();
         String sql = "SELECT p.* " +
                     "FROM problem p, topic t, problem_topic pt " +

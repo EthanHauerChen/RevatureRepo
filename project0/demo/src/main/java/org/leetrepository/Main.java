@@ -2,12 +2,15 @@ package org.leetrepository;
 
 import org.leetrepository.controller.ProblemController;
 import org.leetrepository.repository.DAO.ProblemDAO;
+import org.leetrepository.repository.DAO.SolutionDAO;
 import org.leetrepository.repository.DAO.TopicDAO;
 import org.leetrepository.repository.entities.ProblemEntity;
+import org.leetrepository.repository.entities.SolutionEntity;
 import org.leetrepository.repository.entities.TopicEntity;
 import org.leetrepository.util.ConnectionHandler;
 import org.leetrepository.util.InputHandler;
 
+import java.nio.ByteBuffer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -136,12 +139,12 @@ public class Main {
 //        }
 //        catch (SQLException e) { e.printStackTrace(); }
         //test add topic to problem
-        try {
-            ProblemEntity problem = problemDAO.findByName("Reverse words").get(0);
-            TopicEntity topic = topicDAO.findByName("Two Pointers").get(0);
-            problemDAO.addTopicToProblem(problem, topic);
-        }
-        catch (SQLException e) { e.printStackTrace(); }
+//        try {
+//            ProblemEntity problem = problemDAO.findByName("Reverse words").get(0);
+//            TopicEntity topic = topicDAO.findByName("Two Pointers").get(0);
+//            problemDAO.addTopicToProblem(problem, topic);
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
         //test find topics for a given problem
 //        try {
 //            ProblemEntity problem = problemDAO.findByName("Climbing").get(0);
@@ -158,6 +161,89 @@ public class Main {
 //            System.out.println(topicDAO.findTopicsForProblem(problem));
 //        }
 //        catch (SQLException e) { e.printStackTrace(); }
+        SolutionDAO solutionDAO = new SolutionDAO();
+        //test create + findbyid
+//        try {
+////            SolutionEntity solution = new SolutionEntity();
+////            solution.setProblemId(1);
+////            solution.setName("test");
+////            solution.setDescription("test");
+////            solution.setSolutionCode(ByteBuffer.wrap(makeTestByteArray()));
+////            int id = solutionDAO.create(solution);
+////            System.out.println(solutionDAO.findById(id));
+////        }
+////        catch (SQLException e) {
+////            e.printStackTrace();
+////        }
+        //test create failure
+//        try {
+//            SolutionEntity solution = new SolutionEntity();
+//            solution.setProblemId(1);
+//            solution.setName("test");
+//            solution.setDescription("test");
+//            solution.setSolutionCode(ByteBuffer.wrap(makeTestByteArray()));
+//            int id = solutionDAO.create(solution);
+//            System.out.println(solutionDAO.findById(id));
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+        //test find all
+//        try {
+//            System.out.println(solutionDAO.findAll());
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+        //test findsolutionsgivenproblem
+//        try {
+//            SolutionEntity solution = new SolutionEntity();
+//            solution.setProblemId(53);
+//            solution.setName("test");
+//            solution.setDescription("test");
+//            solution.setSolutionCode(ByteBuffer.wrap(makeTestByteArray()));
+//            solutionDAO.create(solution);
+//            ProblemEntity problem1 = new ProblemEntity();
+//            ProblemEntity problem2 = new ProblemEntity();
+//            problem2.setId(99999);
+//            problem1.setId(1);
+//            System.out.println(solutionDAO.findSolutionsGivenProblem(problem1));
+//            System.out.println(solutionDAO.findSolutionsGivenProblem(problem2));
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+        //test find by name
+//        try {
+//            System.out.println(solutionDAO.findSolutionsByName("test"));
+//            System.out.println(solutionDAO.findSolutionsByName("asdf"));
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        //test find by name given problem
+//        try {
+//            ProblemEntity problem = new ProblemEntity();
+//            problem.setId(1);
+//            System.out.println(solutionDAO.findSolutionsByNameGivenProblem("test", problem));
+//            System.out.println(solutionDAO.findSolutionsByNameGivenProblemId("test", 1));
+//            System.out.println(solutionDAO.findSolutionsByNameGivenProblemId("test", 53));
+//            System.out.println(solutionDAO.findSolutionsByNameGivenProblemId("test", 151));
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+        //test update
+//        try {
+//            SolutionEntity solution = solutionDAO.findSolutionsGivenProblemId(53).get(0);
+//            solution.setName("new name");
+//            solution.setDescription("new descript");
+//            solutionDAO.updateById(solution);
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+        //test delete
+//        try {
+//            SolutionEntity solution = solutionDAO.findById(6).get();
+//            solutionDAO.deleteById(solution.getId());
+//        }
+//        catch (SQLException e) { e.printStackTrace(); }
+    }
+
+    private static byte[] makeTestByteArray() {
+        byte[] array = {(byte) 0xee, (byte) 0xff};
+        return array;
     }
 
     private static void printMenu() {

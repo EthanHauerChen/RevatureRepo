@@ -5,6 +5,7 @@ import org.leetrepository.repository.entities.ProblemEntity;
 import org.leetrepository.service.interfaces.ServiceInterface;
 import org.leetrepository.service.model.Problem;
 
+import javax.swing.text.html.Option;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -26,12 +27,27 @@ public class ProblemService implements ServiceInterface<ProblemEntity, Problem> 
 
     @Override
     public Optional<ProblemEntity> getEntityById(Integer id) {
-        return Optional.empty();
+        try {
+            Optional<ProblemEntity> problemEntity = problemDAO.findById(id);
+            if(problemEntity.isEmpty()){
+                throw new RuntimeException("Problem not found");
+            }
+
+            return problemEntity;
+        }
+        catch(SQLException | RuntimeException e){
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 
     @Override
     public List<ProblemEntity> getAllEntities() {
-        return null;
+        try {
+            List<ProblemEntity> problemEntities = problemDAO.findAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -1,16 +1,16 @@
 package org.leetrepository.service.model;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public class Topic {
     private int id;
     private String name;
-    private HashSet<Problem> associatedProblems;
+    private Set<Problem> associatedProblems;
 
     public Topic() {
     }
 
-    public Topic(int id, String name, HashSet<Problem> associatedProblems) {
+    public Topic(int id, String name, Set<Problem> associatedProblems) {
         this.id = id;
         this.name = name;
         this.associatedProblems = associatedProblems;
@@ -32,11 +32,11 @@ public class Topic {
         this.name = name;
     }
 
-    public HashSet<Problem> getAssociatedProblems() {
+    public Set<Problem> getAssociatedProblems() {
         return associatedProblems;
     }
 
-    public void setAssociatedProblems(HashSet<Problem> associatedProblems) {
+    public void setAssociatedProblems(Set<Problem> associatedProblems) {
         this.associatedProblems = associatedProblems;
     }
 

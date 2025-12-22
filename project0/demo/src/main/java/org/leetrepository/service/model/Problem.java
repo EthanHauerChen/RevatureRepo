@@ -1,18 +1,20 @@
 package org.leetrepository.service.model;
 
+import java.util.Set;
+
 public class Problem {
     private int id;
     private String name;
     private String description;
     private String difficulty;
     private String url;
-    private List<Solution> solutions;
-    private List<Topic> topics;
+    private Set<Solution> solutions;
+    private Set<Topic> topics;
 
     public Problem() {
     }
 
-    public Problem(int id, String name, String description, String difficulty, String url, List<Solution> solutions, List<Topic> topics) {
+    public Problem(int id, String name, String description, String difficulty, String url, Set<Solution> solutions, Set<Topic> topics) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -62,19 +64,19 @@ public class Problem {
         this.url = url;
     }
 
-    public List<Solution> getSolutions() {
+    public Set<Solution> getSolutions() {
         return solutions;
     }
 
-    public void setSolutions(List<Solution> solutions) {
+    public void setSolutions(Set<Solution> solutions) {
         this.solutions = solutions;
     }
 
-    public List<Topic> getTopics() {
+    public Set<Topic> getTopics() {
         return topics;
     }
 
-    public void setTopics(List<Topic> topics) {
+    public void setTopics(Set<Topic> topics) {
         this.topics = topics;
     }
 

@@ -7,6 +7,7 @@ import org.leetrepository.repository.DAO.TopicDAO;
 import org.leetrepository.repository.entities.ProblemEntity;
 import org.leetrepository.repository.entities.SolutionEntity;
 import org.leetrepository.repository.entities.TopicEntity;
+import org.leetrepository.service.ProblemService;
 import org.leetrepository.util.ConnectionHandler;
 import org.leetrepository.util.InputHandler;
 
@@ -239,6 +240,7 @@ public class Main {
 //            solutionDAO.deleteById(solution.getId());
 //        }
 //        catch (SQLException e) { e.printStackTrace(); }
+        ProblemService problemService = new ProblemService(problemDAO);
     }
 
     private static byte[] makeTestByteArray() {

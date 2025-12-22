@@ -11,7 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProblemService implements ServiceInterface<ProblemEntity, Problem> {
-    ProblemDAO problemDAO = new ProblemDAO();
+    ProblemDAO problemDAO;// = new ProblemDAO();
+
+    //USED ONLY FOR TESTING, DO NOT USE
+    public ProblemService(ProblemDAO problemDAO) {
+        this.problemDAO = problemDAO;
+    }
 
     @Override
     public Integer createEntity(ProblemEntity entity) {
@@ -43,16 +48,28 @@ public class ProblemService implements ServiceInterface<ProblemEntity, Problem> 
 
     @Override
     public List<ProblemEntity> getAllEntities() {
+        List<ProblemEntity> problemEntities;
         try {
-            List<ProblemEntity> problemEntities = problemDAO.findAll();
+            problemEntities = problemDAO.findAll();
+            return problemEntities;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return null;
         }
     }
 
     @Override
-    public ProblemEntity updateEntity(Integer id, ProblemEntity newEntity) {
-        return null;
+    public ProblemEntity updateEntity(ProblemEntity newEntity) {
+        try {
+            Optional<ProblemEntity> returnEntity = problemDAO.updateById(newEntity);
+            if (returnEntity.isEmpty())
+                throw new RuntimeException();
+            return returnEntity.get();
+        }
+        catch (SQLException | RuntimeException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

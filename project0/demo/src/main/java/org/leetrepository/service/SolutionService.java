@@ -142,4 +142,17 @@ public class SolutionService implements ServiceInterface<SolutionEntity, Solutio
             return solutions;
         }
     }
+
+    public Optional<Solution> getSolutionByNameGivenProblemId(String name, int id) {
+        try {
+            Optional<Solution> solution = solutionDAO.findSolutionsByNameGivenProblemId(name, id).iterator().next();
+            if (solution.isPresent())
+                return solution;
+            else
+                Optional.empty();
+        }
+        catch (SQLException | RuntimeException e) {
+            Optional.empty();
+        }
+    }
 }

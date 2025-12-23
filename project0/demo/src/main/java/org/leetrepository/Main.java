@@ -37,6 +37,7 @@ public class Main {
             int choice = InputHandler.getIntInput("Make a choice: ");
             switch(choice){
                 case 1 -> problemController.handleInput();
+                case 2 -> solutionController.handleInput();
                 case 0 -> {
                     System.out.println("Goodbye!");
                     running = false;

@@ -1,8 +1,12 @@
 package org.leetrepository.controller;
 
 import org.leetrepository.repository.DAO.ProblemDAO;
+import org.leetrepository.repository.DAO.SolutionDAO;
+import org.leetrepository.repository.DAO.TopicDAO;
 import org.leetrepository.repository.entities.ProblemEntity;
 import org.leetrepository.service.ProblemService;
+import org.leetrepository.service.SolutionService;
+import org.leetrepository.service.TopicService;
 import org.leetrepository.service.model.Problem;
 import org.leetrepository.util.InputHandler;
 
@@ -12,6 +16,8 @@ import java.util.Optional;
 public class ProblemController {
     private static final ProblemDAO problemDAO = new ProblemDAO();
     private static final ProblemService problemService = new ProblemService(problemDAO);
+    private static final TopicService topicService = new TopicService(new TopicDAO(), problemService);
+    private static final SolutionService solutionService = new SolutionService(new SolutionDAO(), problemService);
     private SolutionController solutionController;
     private TopicController topicController;
 
@@ -38,6 +44,65 @@ public class ProblemController {
             }
         }
     }
+
+    private void getSolutionsGivenProblem() {
+        int choice = InputHandler.getIntInput("1. Search by problem number\n2. Search problem by name");
+        Optional<Problem> problem = Optional.empty();
+
+        switch (choice) {
+            case 1 -> {
+                int id = InputHandler.getIntInput("Enter the problem number");
+                problem = problemService.getModelById(id);
+            }
+            case 2 -> {
+                String name = InputHandler.getStringInput("Enter the problem name");
+                problem = problemService.getModelByName(name);
+            }
+            default -> {
+                System.out.println("Exiting");
+                return;
+            }
+        }
+
+        if (problem.isEmpty()) {
+            System.out.println("problem not found");
+            return;
+        }
+
+        ProblemEntity problemEntity = new ProblemEntity();
+        problemEntity.setId(problem.get().getId());
+        System.out.println(solutionService.getSolutionsGivenProblemId(problemEntity.getId()));
+    }
+
+    private void getTopicsGivenProblem() {
+        int choice = InputHandler.getIntInput("1. Search by problem number\n2. Search problem by name");
+        Optional<Problem> problem = Optional.empty();
+
+        switch (choice) {
+            case 1 -> {
+                int id = InputHandler.getIntInput("Enter the problem number");
+                problem = problemService.getModelById(id);
+            }
+            case 2 -> {
+                String name = InputHandler.getStringInput("Enter the problem name");
+                problem = problemService.getModelByName(name);
+            }
+            default -> {
+                System.out.println("Exiting");
+                return;
+            }
+        }
+
+        if (problem.isEmpty()) {
+            System.out.println("problem not found");
+            return;
+        }
+
+        ProblemEntity problemEntity = new ProblemEntity();
+        problemEntity.setId(problem.get().getId());
+        System.out.println(topicService.getTopicsGivenProblemEntity(problemEntity));
+    }
+
     private void printMainMenu() {
         System.out.println("=== Problem Menu ===");
         System.out.println("1. Add a new LeetCode problem");
@@ -174,6 +239,8 @@ public class ProblemController {
             switch(choice){
                 case 1 -> getById();
                 case 2 -> getByName();
+                case 3 -> getTopicsGivenProblem();
+                case 4 -> getSolutionsGivenProblem();
                 case 0 -> {
                     System.out.println("Exiting search Problem menu");
                     running = false;
@@ -187,6 +254,8 @@ public class ProblemController {
     private void getMenu() {
         System.out.println("1. Search by problem number");
         System.out.println("2. Search by problem name");
+        System.out.println("3. Get all topics for a given problem");
+        System.out.println("4. Get all solutions for a given problem");
         System.out.println("0. Exit");
     }
 

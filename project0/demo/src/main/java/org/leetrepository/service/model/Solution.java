@@ -1,6 +1,7 @@
 package org.leetrepository.service.model;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 public class Solution {
     private int id;
@@ -82,7 +83,7 @@ public class Solution {
                 ", problem=" + problem +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", solutionCode=" + solutionCode +
+                ", solutionCode=" + new String(solutionCode.array(), StandardCharsets.UTF_8) +
                 '}';
     }
 }

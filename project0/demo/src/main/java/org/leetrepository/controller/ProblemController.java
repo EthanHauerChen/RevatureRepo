@@ -6,6 +6,7 @@ import org.leetrepository.service.ProblemService;
 import org.leetrepository.service.model.Problem;
 import org.leetrepository.util.InputHandler;
 
+import java.sql.SQLOutput;
 import java.util.Optional;
 
 public class ProblemController {
@@ -28,8 +29,9 @@ public class ProblemController {
             switch(choice){
                 case 1 -> addProblem();
                 case 2 -> edit();
+                case 3 -> getProblem();
                 case 0 -> {
-                    System.out.println("Leaving Department Services");
+                    System.out.println("Leaving Problem Menu");
                     running = false;
                 }
                 default -> System.out.println("Invalid choice");
@@ -40,7 +42,9 @@ public class ProblemController {
         System.out.println("=== Problem Menu ===");
         System.out.println("1. Add a new LeetCode problem");
         System.out.println("2. Edit an existing LeetCode problem");
-        System.out.println("\tadd/remove a solution, add/remove a topic");
+//        System.out.println("\tadd/remove a solution, add/remove a topic");
+        System.out.println("3. View a LeetCode problem");
+        System.out.println("0. Exit");
     }
 
     private void printEditMenu() {
@@ -160,5 +164,48 @@ public class ProblemController {
         else {
             System.out.println("Invalid input, try again");
         }
+    }
+
+    private void getProblem() {
+        boolean running = true;
+        while(running){
+            getMenu();
+            int choice = InputHandler.getIntInput("Enter your choice: ");
+            switch(choice){
+                case 1 -> getById();
+                case 2 -> getByName();
+                case 0 -> {
+                    System.out.println("Exiting search Problem menu");
+                    running = false;
+                    return;
+                }
+                default -> System.out.println("Invalid choice");
+            }
+        }
+    }
+
+    private void getMenu() {
+        System.out.println("1. Search by problem number");
+        System.out.println("2. Search by problem name");
+    }
+
+    private void getById() {
+        int id = InputHandler.getIntInput("Enter the problem number");
+        Optional<Problem> problem = problemService.getModelById(id);
+        if (problem.isEmpty()) {
+            System.out.println("Problem not found");
+            return;
+        }
+        System.out.println(problem.get().toString());
+    }
+
+    private void getByName() {
+        String name = InputHandler.getStringInput("Enter the problem name");
+        Optional<Problem> problem = problemService.getModelByName(name);
+        if (problem.isEmpty()) {
+            System.out.println("Problem not found");
+            return;
+        }
+        System.out.println(problem.get().toString());
     }
 }

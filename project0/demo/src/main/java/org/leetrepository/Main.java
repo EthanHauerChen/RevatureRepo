@@ -38,6 +38,7 @@ public class Main {
             switch(choice){
                 case 1 -> problemController.handleInput();
                 case 2 -> solutionController.handleInput();
+                case 3 -> topicController.handleInput();
                 case 0 -> {
                     System.out.println("Goodbye!");
                     running = false;

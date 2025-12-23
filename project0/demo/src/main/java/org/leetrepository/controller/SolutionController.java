@@ -36,7 +36,7 @@ public class SolutionController {
                 case 2 -> edit();
                 case 3 -> getSolution();
                 case 0 -> {
-                    System.out.println("Leaving Problem Menu");
+                    System.out.println("Leaving Solution Menu");
                     running = false;
                 }
                 default -> System.out.println("Invalid choice");

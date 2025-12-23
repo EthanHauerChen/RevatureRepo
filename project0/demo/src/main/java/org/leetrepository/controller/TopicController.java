@@ -58,7 +58,7 @@ public class TopicController {
         String newName = InputHandler.getStringInput("Enter the new name of the Topic you are trying to edit");
 
         //attempt creation
-        TopicEntity topicEntity = new TopicEntity(name);
+        TopicEntity topicEntity = new TopicEntity(topic.get().getId(), name);
         topicEntity = topicService.updateEntity(topicEntity);
 
         //return success/error

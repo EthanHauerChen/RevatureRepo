@@ -34,7 +34,7 @@ public class SolutionController {
             switch(choice){
                 case 1 -> addSolution();
                 case 2 -> edit();
-//                case 3 -> getProblem();
+                case 3 -> getSolution();
                 case 0 -> {
                     System.out.println("Leaving Problem Menu");
                     running = false;
@@ -42,6 +42,31 @@ public class SolutionController {
                 default -> System.out.println("Invalid choice");
             }
         }
+    }
+
+    private void getSolution() {
+        Optional<Solution> solution = Optional.empty();
+        //get input
+        int problemId = InputHandler.getIntInput("What is the number of the LeetCode problem that the solution belongs to?");
+        if (problemId < 0) {
+            System.out.println("Please enter a valid number");
+            return;
+        }
+        if (problemService.getEntityById(problemId).isEmpty()) {
+            System.out.println("problem not found");
+            return;
+        }
+        String name = InputHandler.getStringInput("Enter the name of the Solution you are trying to edit");
+        if (name.equals("")) {
+            System.out.println("invalid input");
+            return;
+        }
+        solution = solutionService.getSolutionByNameGivenProblemId(name, problemId);
+        if (solution.isEmpty()) {
+            System.out.println("Solution not found");
+            return;
+        }
+        System.out.println(solution.get());
     }
 
     private void edit() {

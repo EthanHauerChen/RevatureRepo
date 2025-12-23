@@ -27,7 +27,7 @@ public class TopicController {
             int choice = InputHandler.getIntInput("Enter your choice: ");
             switch(choice){
                 case 1 -> addTopic();
-//                case 2 -> edit();
+                case 2 -> edit();
                 case 3 -> getTopics();
                 case 0 -> {
                     System.out.println("Leaving Topic Menu");

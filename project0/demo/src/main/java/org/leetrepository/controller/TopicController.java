@@ -58,12 +58,12 @@ public class TopicController {
         String newName = InputHandler.getStringInput("Enter the new name of the Topic you are trying to edit");
 
         //attempt creation
-        TopicEntity topicEntity = new TopicEntity(topic.get().getId(), name);
+        TopicEntity topicEntity = new TopicEntity(topic.get().getId(), newName);
         topicEntity = topicService.updateEntity(topicEntity);
 
         //return success/error
         if (topicEntity != null) {
-            System.out.println("Successfully edited Solution for topic " + name);
+            System.out.println("Successfully edited Solution for topic " + newName);
         }
         else {
             System.out.println("Invalid input, try again");

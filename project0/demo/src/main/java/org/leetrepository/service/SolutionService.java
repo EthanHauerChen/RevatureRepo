@@ -145,14 +145,22 @@ public class SolutionService implements ServiceInterface<SolutionEntity, Solutio
 
     public Optional<Solution> getSolutionByNameGivenProblemId(String name, int id) {
         try {
-            Optional<Solution> solution = solutionDAO.findSolutionsByNameGivenProblemId(name, id).iterator().next();
-            if (solution.isPresent())
-                return solution;
+            Set<SolutionEntity> solutionEntity = solutionDAO.findSolutionsByNameGivenProblemId(name, id);
+            if (!solutionEntity.isEmpty()) {
+                Optional<Solution> solution = convertEntityToModel(solutionEntity.iterator().next());
+                if (solution.isPresent()) {
+                    return solution;
+                }
+                else {
+                    throw new RuntimeException("Failed to convert Solution entity to model");
+                }
+            }
             else
-                Optional.empty();
+                return Optional.empty();
         }
         catch (SQLException | RuntimeException e) {
-            Optional.empty();
+            e.printStackTrace();
+            return Optional.empty();
         }
     }
 }

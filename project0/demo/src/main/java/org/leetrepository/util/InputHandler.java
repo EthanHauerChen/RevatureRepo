@@ -1,5 +1,7 @@
 package org.leetrepository.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -26,4 +28,22 @@ public class InputHandler {
             }
         }
     }
+
+//    public static String getMultiLineInput(String prompt) {
+//        List<String> lines = new ArrayList<>();
+//        System.out.println("Enter lines of text (type 'END' on a new line to finish):");
+//
+//        while (scanner.hasNextLine()) {
+//            String line = scanner.nextLine();
+//            if (line.equalsIgnoreCase("END")) {
+//                break; // Exit the loop when "END" is entered
+//            }
+//            lines.add(line);
+//        }
+//
+//        System.out.println("\n--- Captured Input ---");
+//        for (String capturedLine : lines) {
+//            System.out.println(capturedLine);
+//        }
+//    }
 }

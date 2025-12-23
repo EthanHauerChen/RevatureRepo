@@ -126,6 +126,26 @@ public class ProblemService implements ServiceInterface<ProblemEntity, Problem> 
         }
     }
 
+    public Optional<Problem> getModelByName(String name) {
+        try {
+            Set<ProblemEntity> problems = problemDAO.findByName(name);
+            ProblemEntity problemEntity;
+            if (!problems.isEmpty())
+                problemEntity = problemDAO.findByName(name).iterator().next();
+            else
+                throw new RuntimeException("Problem not found");
+            Optional<Problem> problem = convertEntityToModel(problemEntity);
+            if (problem.isPresent())
+                return problem;
+            else
+                throw new RuntimeException("Failed to convert Problem entity to model");
+        }
+        catch (SQLException | RuntimeException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
     public Set<Problem> getProblemsGivenTopicEntity(TopicEntity entity) {
         Set<Problem> problems = new HashSet<>();
         try {

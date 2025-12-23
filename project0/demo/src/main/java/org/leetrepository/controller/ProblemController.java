@@ -3,7 +3,10 @@ package org.leetrepository.controller;
 import org.leetrepository.repository.DAO.ProblemDAO;
 import org.leetrepository.repository.entities.ProblemEntity;
 import org.leetrepository.service.ProblemService;
+import org.leetrepository.service.model.Problem;
 import org.leetrepository.util.InputHandler;
+
+import java.util.Optional;
 
 public class ProblemController {
     private static final ProblemDAO problemDAO = new ProblemDAO();
@@ -24,6 +27,7 @@ public class ProblemController {
             int choice = InputHandler.getIntInput("Enter your choice: ");
             switch(choice){
                 case 1 -> addProblem();
+                case 2 -> edit();
                 case 0 -> {
                     System.out.println("Leaving Department Services");
                     running = false;
@@ -37,6 +41,17 @@ public class ProblemController {
         System.out.println("1. Add a new LeetCode problem");
         System.out.println("2. Edit an existing LeetCode problem");
         System.out.println("\tadd/remove a solution, add/remove a topic");
+    }
+
+    private void printEditMenu() {
+        System.out.println("=== Edit or Remove ===");
+        System.out.println("1. Edit an existing LeetCode problem");
+        System.out.println("2. Add a solution");
+        System.out.println("3. Add a topic(s)");
+    }
+
+    private void printNotEmpty(String input) {
+        System.out.println(input + " must not be empty");
     }
 
     private void addProblem() {
@@ -77,7 +92,63 @@ public class ProblemController {
         }
     }
 
-    private void printNotEmpty(String input) {
-        System.out.println(input + " must not be empty");
+    private void edit() {
+        boolean running = true;
+        while(running){
+            printEditMenu();
+            int choice = InputHandler.getIntInput("Enter your choice: ");
+            switch(choice){
+                case 1 -> editProblem();
+                case 0 -> {
+                    System.out.println("Leaving Edit Menu");
+                    running = false;
+                }
+                default -> System.out.println("Invalid choice");
+            }
+        }
+    }
+
+    private void editProblem() {
+        Optional<Problem> problem = Optional.empty();
+        ProblemEntity problemEntity = new ProblemEntity();
+        //get input
+        int choice = InputHandler.getIntInput("Enter 1 to search and edit by problem number. Enter 2 to search and edit by problem name");
+        if (choice != 1 || choice != 2) {
+            System.out.println("Exiting edit-problem menu");
+            return;
+        }
+        int id = -1;
+        String name = "";
+        switch (choice) {
+            case 1 -> {
+                id = InputHandler.getIntInput("Enter the number of the LeetCode problem");
+                problem = problemService.getModelById(id);
+            }
+            case 2 -> {
+                name = InputHandler.getStringInput("Search the name of the LeetCode problem");
+                problem = problemService.getModelByName(name);
+            }
+        }
+        if (problem.isEmpty()) {
+            System.out.println("Problem not found");
+            return;
+        }
+        problemEntity.setId(problem.get().getId());
+        problemEntity.setName(problem.get().getName());
+        String description = InputHandler.getStringInput("Enter the description of the LeetCode problem. Leave blank if not editing this field");
+        String difficulty = InputHandler.getStringInput("Enter the difficulty. Must be one of the following {Easy, Medium, Hard, Unspecified}. Leave blank if not editing this field");
+        String url = InputHandler.getStringInput("Enter the url to the LeetCode problem. Leave blank if not editing this field");
+        problemEntity.setDescription(description);
+        problemEntity.setDifficulty(difficulty);
+        problemEntity.setUrl(url);
+        problemEntity = problemService.updateEntity(problemEntity);
+
+        //return success/error
+        if (problemEntity != null) {
+            System.out.println("Successfully updated problem: " + problemEntity.getId() + ". " + name);
+        }
+        else {
+            System.out.println("Invalid input, try again");
+        }
     }
 }

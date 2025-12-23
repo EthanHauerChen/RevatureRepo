@@ -33,7 +33,7 @@ public class TopicController {
 
     private void addTopic() {
         //get input
-        String name = ("What is the name of the topic?");
+        String name = InputHandler.getStringInput("What is the name of the topic?");
         if (name.equals("")) {
             System.out.println("invalid input");
             return;

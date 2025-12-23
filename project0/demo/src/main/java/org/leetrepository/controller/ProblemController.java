@@ -139,6 +139,15 @@ public class ProblemController {
         String description = InputHandler.getStringInput("Enter the description of the LeetCode problem. Leave blank if not editing this field");
         String difficulty = InputHandler.getStringInput("Enter the difficulty. Must be one of the following {Easy, Medium, Hard, Unspecified}. Leave blank if not editing this field");
         String url = InputHandler.getStringInput("Enter the url to the LeetCode problem. Leave blank if not editing this field");
+        if (description.equals("")) {
+            description = problem.get().getDescription();
+        }
+        if (difficulty.equals("")) {
+            difficulty = problem.get().getDifficulty();
+        }
+        if (url.equals("")) {
+            url = problem.get().getUrl();
+        }
         problemEntity.setDescription(description);
         problemEntity.setDifficulty(difficulty);
         problemEntity.setUrl(url);

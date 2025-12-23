@@ -113,7 +113,7 @@ public class ProblemController {
         ProblemEntity problemEntity = new ProblemEntity();
         //get input
         int choice = InputHandler.getIntInput("Enter 1 to search and edit by problem number. Enter 2 to search and edit by problem name");
-        if (choice != 1 || choice != 2) {
+        if (choice != 1 && choice != 2) {
             System.out.println("Exiting edit-problem menu");
             return;
         }
@@ -133,6 +133,7 @@ public class ProblemController {
             System.out.println("Problem not found");
             return;
         }
+        System.out.println("Editing: " + problem.get().getId() + ". " + problem.get().getName());
         problemEntity.setId(problem.get().getId());
         problemEntity.setName(problem.get().getName());
         String description = InputHandler.getStringInput("Enter the description of the LeetCode problem. Leave blank if not editing this field");

@@ -50,8 +50,8 @@ public class ProblemController {
     private void printEditMenu() {
         System.out.println("=== Edit or Remove ===");
         System.out.println("1. Edit an existing LeetCode problem");
-        System.out.println("2. Add a solution");
-        System.out.println("3. Add a topic(s)");
+//        System.out.println("2. Add a solution");
+//        System.out.println("3. Add a topic(s)");
     }
 
     private void printNotEmpty(String input) {
@@ -187,6 +187,7 @@ public class ProblemController {
     private void getMenu() {
         System.out.println("1. Search by problem number");
         System.out.println("2. Search by problem name");
+        System.out.println("0. Exit");
     }
 
     private void getById() {

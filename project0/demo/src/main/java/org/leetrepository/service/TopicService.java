@@ -117,6 +117,28 @@ public class TopicService implements ServiceInterface<TopicEntity, Topic> {
         }
     }
 
+    public Optional<Topic> getModelByName(String name) {
+        try {
+            Set<TopicEntity> topicEntities = topicDAO.findByName(name);
+            if (!topicEntities.isEmpty()) {
+                Optional<Topic> topic = convertEntityToModel(topicEntities.iterator().next());
+                if (topic.isPresent()) {
+                    return topic;
+                }
+                else {
+                    throw new RuntimeException("Unable to convert topic entity to model");
+                }
+            }
+            else {
+                throw new RuntimeException("Topic not found");
+            }
+        }
+        catch (SQLException | RuntimeException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
     public Set<Topic> getTopicsGivenProblemEntity(ProblemEntity entity) {
         Set<Topic> topics = new HashSet<>();
         try {

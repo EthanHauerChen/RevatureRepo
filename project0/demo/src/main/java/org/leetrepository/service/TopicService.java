@@ -15,12 +15,9 @@ import java.util.Set;
 public class TopicService implements ServiceInterface<TopicEntity, Topic> {
     private TopicDAO topicDAO;// = new TopicDAO();
 
-    private ProblemService problemService;// = new ProblemService();
-
     //FOR TESTING ONLY
     public TopicService(TopicDAO topicDAO, ProblemService problemService) {
         this.topicDAO = topicDAO;
-        this.problemService = problemService;
     }
 
     @Override

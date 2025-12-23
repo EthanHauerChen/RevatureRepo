@@ -58,6 +58,7 @@ public class Main {
         System.out.println("\tadd or edit a LeetCode problem");
         System.out.println("2. Solution Menu");
         System.out.println("\tadd or edit a LeetCode solution");
+        System.out.println("3. Topic Menu");
         System.out.println("0. Exit");
     }
 }

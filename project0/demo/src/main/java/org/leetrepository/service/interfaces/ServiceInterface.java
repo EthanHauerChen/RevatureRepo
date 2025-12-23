@@ -2,6 +2,7 @@ package org.leetrepository.service.interfaces;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ServiceInterface<T, U> {
 
@@ -9,7 +10,7 @@ public interface ServiceInterface<T, U> {
 
     Integer createEntity(T entity);
     Optional<T> getEntityById(Integer id);
-    List<T> getAllEntities();
+    Set<T> getAllEntities();
     T updateEntity(T newEntity);
     boolean deleteEntity(Integer id);
 

@@ -6,8 +6,8 @@ import org.leetrepository.util.ConnectionHandler;
 
 import javax.xml.transform.Result;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Optional;
 
 public class ProblemDAO implements DAOInterface<ProblemEntity> {
@@ -52,8 +52,8 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
         return Optional.empty();
     }
 
-    public List<ProblemEntity> findByName(String name) throws SQLException {
-        List<ProblemEntity> problemEntities = new ArrayList<>();
+    public Set<ProblemEntity> findByName(String name) throws SQLException {
+        Set<ProblemEntity> problemEntities = new HashSet<>();
         String sql = "SELECT * FROM problem WHERE name ILIKE ?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, "%" + name + "%");
@@ -70,8 +70,8 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
     }
 
     @Override
-    public List<ProblemEntity> findAll() throws SQLException {
-        List<ProblemEntity> problemEntities = new ArrayList<>();
+    public Set<ProblemEntity> findAll() throws SQLException {
+        Set<ProblemEntity> problemEntities = new HashSet<>();
         String sql = "SELECT * FROM problem;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) { //could also use createStatement here. when to use which: https://www.baeldung.com/java-statement-preparedstatement
             try (ResultSet rs = stmt.executeQuery()) {
@@ -90,8 +90,8 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
         return problemEntities;
     }
 
-    public List<ProblemEntity> findProblemsGivenTopic(TopicEntity entity) throws SQLException {
-        List<ProblemEntity> problemEntities = new ArrayList<>();
+    public Set<ProblemEntity> findProblemsGivenTopic(TopicEntity entity) throws SQLException {
+        Set<ProblemEntity> problemEntities = new HashSet<>();
         String sql = "SELECT p.* " +
                     "FROM problem p, topic t, problem_topic pt " +
                     "WHERE t.id = ? " +
@@ -139,7 +139,7 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
         }
     }
 
-    public void addTopicsToProblem(ProblemEntity problem, List<TopicEntity> topics) throws SQLException {
+    public void addTopicsToProblem(ProblemEntity problem, Set<TopicEntity> topics) throws SQLException {
         StringBuilder sb = new StringBuilder("INSERT INTO problem_topic values ");
         for (int i = 0; i < topics.size(); i++) {
             sb.append("(?, ?), ");
@@ -147,9 +147,11 @@ public class ProblemDAO implements DAOInterface<ProblemEntity> {
         sb.delete(sb.length() - 2, sb.length()).append(";"); //chop off trailing comma, then add semicolon
         String sql = sb.toString();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            for (int i = 0; i < topics.size(); i++) {
+            int i = 0;
+            for (TopicEntity topic : topics) {
                 stmt.setInt(2 * i + 1, problem.getId());
-                stmt.setInt(2 * i + 2, topics.get(i).getId());
+                stmt.setInt(2 * i + 2, topic.getId());
+                i++;
             }
             stmt.executeUpdate(); //if failure, exception will be thrown
         }

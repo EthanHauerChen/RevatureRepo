@@ -1,21 +1,29 @@
 package org.leetrepository.service;
 
 import org.leetrepository.repository.DAO.ProblemDAO;
+import org.leetrepository.repository.DAO.SolutionDAO;
+import org.leetrepository.repository.DAO.TopicDAO;
 import org.leetrepository.repository.entities.ProblemEntity;
 import org.leetrepository.service.interfaces.ServiceInterface;
 import org.leetrepository.service.model.Problem;
 
 import javax.swing.text.html.Option;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class ProblemService implements ServiceInterface<ProblemEntity, Problem> {
     ProblemDAO problemDAO;// = new ProblemDAO();
+    SolutionDAO solutionDAO;// = new SolutionDAO();
+    TopicDAO topicDAO;
 
     //USED ONLY FOR TESTING, DO NOT USE
-    public ProblemService(ProblemDAO problemDAO) {
+    public ProblemService(ProblemDAO problemDAO, SolutionDAO solutionDAO, TopicDAO topicDAO) {
         this.problemDAO = problemDAO;
+        this.solutionDAO = solutionDAO;
+        this.topicDAO = topicDAO;
     }
 
     @Override
@@ -47,14 +55,14 @@ public class ProblemService implements ServiceInterface<ProblemEntity, Problem> 
     }
 
     @Override
-    public List<ProblemEntity> getAllEntities() {
-        List<ProblemEntity> problemEntities;
+    public Set<ProblemEntity> getAllEntities() {
+        Set<ProblemEntity> problemEntities;
         try {
             problemEntities = problemDAO.findAll();
             return problemEntities;
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return new HashSet<ProblemEntity>();
         }
     }
 
@@ -63,7 +71,7 @@ public class ProblemService implements ServiceInterface<ProblemEntity, Problem> 
         try {
             Optional<ProblemEntity> returnEntity = problemDAO.updateById(newEntity);
             if (returnEntity.isEmpty())
-                throw new RuntimeException();
+                throw new RuntimeException("Problem not found");
             return returnEntity.get();
         }
         catch (SQLException | RuntimeException e) {
@@ -74,16 +82,47 @@ public class ProblemService implements ServiceInterface<ProblemEntity, Problem> 
 
     @Override
     public boolean deleteEntity(Integer id) {
-        return false;
+        try {
+            return problemDAO.deleteById(id).isPresent();
+        }
+        catch (SQLException e) {
+            System.err.println("Failed to delete");
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public Optional<Problem> convertEntityToModel(ProblemEntity entity) {
-        return Optional.empty();
+        Problem problemModel = new Problem();
+        problemModel.setId(entity.getId());
+        problemModel.setName(entity.getName());
+        problemModel.setDescription(entity.getDescription());
+        problemModel.setDifficulty(entity.getDifficulty());
+        problemModel.setUrl(entity.getUrl());
+        return Optional.of(problemModel);
     }
 
     @Override
     public Optional<Problem> getModelById(Integer id) {
-        return Optional.empty();
+        Optional<ProblemEntity> problemEntity = getEntityById(id);
+        try {
+            if (problemEntity.isPresent()) {
+                Optional<Problem> problem = convertEntityToModel(problemEntity.get());
+                if (problem.isPresent()){
+                    return problem;
+                }
+                else {
+                    throw new RuntimeException("Failed to convert Problem entity to model");
+                }
+            }
+            else {
+                throw new RuntimeException("Problem not found");
+            }
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 }

@@ -1,4 +1,6 @@
 import org.leetrepository.repository.DAO.ProblemDAO;
+import org.leetrepository.repository.DAO.SolutionDAO;
+import org.leetrepository.repository.DAO.TopicDAO;
 import org.leetrepository.repository.entities.ProblemEntity;
 import org.leetrepository.repository.entities.SolutionEntity;
 import org.leetrepository.repository.entities.TopicEntity;
@@ -28,6 +30,12 @@ import static org.mockito.Mockito.*;
 public class ProblemServiceTest {
     @Mock
     private ProblemDAO problemDAOMock;
+
+    @Mock
+    private SolutionDAO solutionDAOMock;
+
+    @Mock
+    private TopicDAO topicDAOMock;
 
     @InjectMocks
     private ProblemService problemServiceMock;
@@ -143,6 +151,41 @@ public class ProblemServiceTest {
 
         ProblemEntity result = problemServiceMock.updateEntity((problemEntityTest));
 
+        assertNull(result);
+    }
+
+    @Test
+    void deleteEntity_SuccessAndFailure_ReturnsTrueFalse() throws SQLException {
+        when(problemDAOMock.deleteById(problemEntityTest.getId())).thenReturn(Optional.of(problemEntityTest));
+        when(problemDAOMock.deleteById(9876543)).thenReturn(Optional.empty());
+
+        boolean resultHappy = problemServiceMock.deleteEntity(problemEntityTest.getId());
+        boolean resultSad = problemServiceMock.deleteEntity(9876543);
+
+        assertTrue(resultHappy);
+        assertFalse(resultSad);
+    }
+
+    @Test
+    void getModelById_Success_ReturnsModel() throws SQLException {
+        when(problemDAOMock.findById(problemEntityTest.getId())).thenReturn(Optional.of(problemEntityTest));
+
+        Optional<Problem> result = problemServiceMock.getModelById(problemEntityTest.getId());
+
+        assertEquals(problemServiceMock.convertEntityToModel(problemEntityTest), result);
+    }
+
+    @Test
+    void getModelById_Failure_ReturnsEmpty() throws SQLException {
+        when(problemDAOMock.findById(123456)).thenReturn(Optional.empty());
+
+        Optional<Problem> result = problemServiceMock.getModelById(123456);
+
         assertEquals(Optional.empty(), result);
+    }
+
+    @Test
+    void getSolutionsGivenProblemId_Success_ReturnsSet() throws SQLException {
+        when(solutionDAOMock.findSolutionsGivenProblemId(problemEntityTest.getId())).thenReturn());
     }
 }

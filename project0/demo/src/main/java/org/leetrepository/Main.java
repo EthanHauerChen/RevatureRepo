@@ -240,7 +240,7 @@ public class Main {
 //            solutionDAO.deleteById(solution.getId());
 //        }
 //        catch (SQLException e) { e.printStackTrace(); }
-        ProblemService problemService = new ProblemService(problemDAO);
+
     }
 
     private static byte[] makeTestByteArray() {

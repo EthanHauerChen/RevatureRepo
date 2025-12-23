@@ -7,9 +7,7 @@ import org.leetrepository.util.ConnectionHandler;
 
 import java.nio.ByteBuffer;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class SolutionDAO implements DAOInterface<SolutionEntity> {
     Connection connection = ConnectionHandler.getConnection();
@@ -47,8 +45,8 @@ public class SolutionDAO implements DAOInterface<SolutionEntity> {
     }
 
     @Override
-    public List<SolutionEntity> findAll() throws SQLException {
-        List<SolutionEntity> solutionEntities = new ArrayList<>();
+    public Set<SolutionEntity> findAll() throws SQLException {
+        Set<SolutionEntity> solutionEntities = new HashSet<>();
         String sql = "SELECT * FROM solution;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) { //could also use createStatement here. when to use which: https://www.baeldung.com/java-statement-preparedstatement
             try (ResultSet rs = stmt.executeQuery()) {
@@ -62,11 +60,11 @@ public class SolutionDAO implements DAOInterface<SolutionEntity> {
         return solutionEntities;
     }
 
-    public List<SolutionEntity> findSolutionsGivenProblem(ProblemEntity problem) throws SQLException {
+    public Set<SolutionEntity> findSolutionsGivenProblem(ProblemEntity problem) throws SQLException {
         return findSolutionsGivenProblemId(problem.getId());
     }
-    public List<SolutionEntity> findSolutionsGivenProblemId(int problem_id) throws SQLException {
-        List<SolutionEntity> solutionEntities = new ArrayList<>();
+    public Set<SolutionEntity> findSolutionsGivenProblemId(int problem_id) throws SQLException {
+        Set<SolutionEntity> solutionEntities = new HashSet<>();
         String sql = "SELECT * FROM solution " +
                 "WHERE problem_id = ?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -82,8 +80,8 @@ public class SolutionDAO implements DAOInterface<SolutionEntity> {
     }
 
 
-    public List<SolutionEntity> findSolutionsByName(String name) throws SQLException {
-        List<SolutionEntity> solutionEntities = new ArrayList<>();
+    public Set<SolutionEntity> findSolutionsByName(String name) throws SQLException {
+        Set<SolutionEntity> solutionEntities = new HashSet<>();
         String sql = "SELECT * FROM solution " +
                 "WHERE name ILIKE ?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -98,11 +96,11 @@ public class SolutionDAO implements DAOInterface<SolutionEntity> {
         return solutionEntities;
     }
 
-    public List<SolutionEntity> findSolutionsByNameGivenProblem(String name, ProblemEntity problem) throws SQLException {
+    public Set<SolutionEntity> findSolutionsByNameGivenProblem(String name, ProblemEntity problem) throws SQLException {
         return findSolutionsByNameGivenProblemId(name, problem.getId());
     }
-    public List<SolutionEntity> findSolutionsByNameGivenProblemId(String name, int problem_id) throws SQLException {
-        List<SolutionEntity> solutionEntities = new ArrayList<>();
+    public Set<SolutionEntity> findSolutionsByNameGivenProblemId(String name, int problem_id) throws SQLException {
+        Set<SolutionEntity> solutionEntities = new HashSet<>();
         String sql = "SELECT * FROM solution " +
                 "WHERE name ILIKE ? " +
                 "AND problem_id = ?;";

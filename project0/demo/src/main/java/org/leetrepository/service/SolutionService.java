@@ -6,6 +6,7 @@ import org.leetrepository.service.model.Solution;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class SolutionService implements ServiceInterface<SolutionEntity, Solution> {
     @Override
@@ -19,7 +20,7 @@ public class SolutionService implements ServiceInterface<SolutionEntity, Solutio
     }
 
     @Override
-    public List<SolutionEntity> getAllEntities() {
+    public Set<SolutionEntity> getAllEntities() {
         return null;
     }
 

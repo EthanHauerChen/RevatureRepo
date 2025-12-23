@@ -6,8 +6,8 @@ import org.leetrepository.repository.entities.TopicEntity;
 import org.leetrepository.util.ConnectionHandler;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Optional;
 
 public class TopicDAO implements DAOInterface<TopicEntity> {
@@ -54,8 +54,8 @@ public class TopicDAO implements DAOInterface<TopicEntity> {
         return Optional.empty();
     }
 
-    public List<TopicEntity> findByName(String name) throws SQLException {
-        List<TopicEntity> topicEntities = new ArrayList<>();
+    public Set<TopicEntity> findByName(String name) throws SQLException {
+        Set<TopicEntity> topicEntities = new HashSet<>();
         String sql = "SELECT * FROM topic WHERE name ILIKE ?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, "%" + name + "%");
@@ -72,8 +72,8 @@ public class TopicDAO implements DAOInterface<TopicEntity> {
     }
 
     @Override
-    public List<TopicEntity> findAll() throws SQLException {
-        List<TopicEntity> topicEntities = new ArrayList<>();
+    public Set<TopicEntity> findAll() throws SQLException {
+        Set<TopicEntity> topicEntities = new HashSet<>();
         String sql = "SELECT * FROM topic;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) { //could also use createStatement here. when to use which: https://www.baeldung.com/java-statement-preparedstatement
             try (ResultSet rs = stmt.executeQuery()) {
@@ -87,8 +87,8 @@ public class TopicDAO implements DAOInterface<TopicEntity> {
         return topicEntities;
     }
 
-    public List<TopicEntity> findTopicsGivenProblem(ProblemEntity problem) throws SQLException {
-        List<TopicEntity> topicEntities = new ArrayList<>();
+    public Set<TopicEntity> findTopicsGivenProblem(ProblemEntity problem) throws SQLException {
+        Set<TopicEntity> topicEntities = new HashSet<>();
         String sql = "SELECT t.* " +
                 "FROM problem p, topic t, problem_topic pt " +
                 "WHERE p.id = ? " +

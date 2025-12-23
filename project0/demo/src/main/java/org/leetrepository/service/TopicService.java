@@ -6,6 +6,7 @@ import org.leetrepository.service.model.Topic;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class TopicService implements ServiceInterface<TopicEntity, Topic> {
 
@@ -20,7 +21,7 @@ public class TopicService implements ServiceInterface<TopicEntity, Topic> {
     }
 
     @Override
-    public List<TopicEntity> getAllEntities() {
+    public Set<TopicEntity> getAllEntities() {
         return null;
     }
 

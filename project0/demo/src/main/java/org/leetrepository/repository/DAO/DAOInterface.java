@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface DAOInterface<T> {
 
@@ -14,7 +15,7 @@ public interface DAOInterface<T> {
 
     //read
     public Optional<T> findById(int id) throws SQLException;
-    public List<T> findAll() throws SQLException;
+    public Set<T> findAll() throws SQLException;
 
     //update
     public Optional<T> updateById(T entity) throws SQLException;

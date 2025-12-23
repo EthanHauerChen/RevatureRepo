@@ -7,6 +7,8 @@ import org.leetrepository.service.ProblemService;
 import org.leetrepository.service.TopicService;
 import org.leetrepository.util.InputHandler;
 
+import java.util.Optional;
+
 public class TopicController {
     private static final ProblemService problemService = new ProblemService(new ProblemDAO());
     private static final TopicService topicService = new TopicService(new TopicDAO(), problemService);
@@ -21,7 +23,7 @@ public class TopicController {
             switch(choice){
                 case 1 -> addTopic();
 //                case 2 -> edit();
-//                case 3 -> getProblem();
+                case 3 -> getTopics();
                 case 0 -> {
                     System.out.println("Leaving Topic Menu");
                     running = false;
@@ -30,6 +32,34 @@ public class TopicController {
             }
         }
     }
+
+    private void getTopics() {
+        System.out.println(topicService.getAllEntities());
+    }
+
+//    private void edit() {
+//        Optional<TopicEntity> topicEntity = Optional.empty();
+//        //get input
+//        String name = InputHandler.getStringInput("What is the name of the topic?");
+//        if (name.equals("")) {
+//            System.out.println("invalid input");
+//            return;
+//        }
+//        topicEntity = topicService.getEntityByName(name);
+//
+//
+//        //attempt creation
+//        TopicEntity topicEntity = new TopicEntity(name);
+//        int topicId = topicService.createEntity(topicEntity);
+//
+//        //return success/error
+//        if (topicId != -1) {
+//            System.out.println("Successfully created problem: " + topicId + " " + name);
+//        }
+//        else {
+//            System.out.println("Invalid input, try again");
+//        }
+//    }
 
     private void addTopic() {
         //get input

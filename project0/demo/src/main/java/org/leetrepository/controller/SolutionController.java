@@ -52,7 +52,7 @@ public class SolutionController {
             System.out.println("Please enter a valid number");
             return;
         }
-        if (solutionService.getEntityById(problemId).isEmpty()) {
+        if (problemService.getEntityById(problemId).isEmpty()) {
             System.out.println("problem not found");
             return;
         }

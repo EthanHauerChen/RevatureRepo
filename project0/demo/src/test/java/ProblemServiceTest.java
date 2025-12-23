@@ -31,19 +31,16 @@ public class ProblemServiceTest {
     @Mock
     private ProblemDAO problemDAOMock;
 
-    @Mock
-    private SolutionDAO solutionDAOMock;
-
-    @Mock
-    private TopicDAO topicDAOMock;
-
     @InjectMocks
     private ProblemService problemServiceMock;
 
     private ProblemEntity problemEntityTest;
     private Problem problemModelTest;
     private Set<Solution> solutionListTest;
+    private Set<SolutionEntity> solutionEntityListTest;
+    private TopicEntity topicEntity;
     private Set<Topic> topicListTest;
+    private Set<TopicEntity> topicEntityListTest;
 
     @BeforeEach
     void setup() {
@@ -71,6 +68,10 @@ public class ProblemServiceTest {
         topicTest.setName("test topic name");
         topicListTest = new HashSet<>();
         topicListTest.add(topicTest);
+
+        topicEntity = new TopicEntity();
+        topicEntity.setId(1);
+        topicEntity.setName("test solution name");
 
         //setup problem model
         problemModelTest = new Problem();
@@ -182,10 +183,5 @@ public class ProblemServiceTest {
         Optional<Problem> result = problemServiceMock.getModelById(123456);
 
         assertEquals(Optional.empty(), result);
-    }
-
-    @Test
-    void getSolutionsGivenProblemId_Success_ReturnsSet() throws SQLException {
-        when(solutionDAOMock.findSolutionsGivenProblemId(problemEntityTest.getId())).thenReturn());
     }
 }

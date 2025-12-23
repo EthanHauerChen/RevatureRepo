@@ -4,8 +4,12 @@ import org.leetrepository.repository.DAO.ProblemDAO;
 import org.leetrepository.repository.DAO.SolutionDAO;
 import org.leetrepository.repository.DAO.TopicDAO;
 import org.leetrepository.repository.entities.ProblemEntity;
+import org.leetrepository.repository.entities.SolutionEntity;
+import org.leetrepository.repository.entities.TopicEntity;
 import org.leetrepository.service.interfaces.ServiceInterface;
 import org.leetrepository.service.model.Problem;
+import org.leetrepository.service.model.Solution;
+import org.leetrepository.service.model.Topic;
 
 import javax.swing.text.html.Option;
 import java.sql.SQLException;
@@ -16,14 +20,10 @@ import java.util.Set;
 
 public class ProblemService implements ServiceInterface<ProblemEntity, Problem> {
     ProblemDAO problemDAO;// = new ProblemDAO();
-    SolutionDAO solutionDAO;// = new SolutionDAO();
-    TopicDAO topicDAO;
 
     //USED ONLY FOR TESTING, DO NOT USE
-    public ProblemService(ProblemDAO problemDAO, SolutionDAO solutionDAO, TopicDAO topicDAO) {
+    public ProblemService(ProblemDAO problemDAO) {
         this.problemDAO = problemDAO;
-        this.solutionDAO = solutionDAO;
-        this.topicDAO = topicDAO;
     }
 
     @Override
@@ -123,6 +123,25 @@ public class ProblemService implements ServiceInterface<ProblemEntity, Problem> 
         catch (RuntimeException e) {
             e.printStackTrace();
             return Optional.empty();
+        }
+    }
+
+    public Set<Problem> getProblemsGivenTopicEntity(TopicEntity entity) {
+        Set<Problem> problems = new HashSet<>();
+        try {
+            Set<ProblemEntity> problemEntities = problemDAO.findProblemsGivenTopic(entity);
+            for (ProblemEntity pEntity : problemEntities) {
+                Optional<Problem> problem = convertEntityToModel(pEntity);
+                if (problem.isPresent()) {
+                    problems.add(problem.get());
+                }
+            }
+
+            return problems;
+        }
+        catch (SQLException e) {
+            //log: no problems associated with given topic
+            return problems;
         }
     }
 }

@@ -1,4 +1,6 @@
-db = connect('mongodb://127.0.0.1:27017/test'); //insert db string here
+import {connection} from "./dbConnection"
+
+db = connect(connection); //insert db string here
 
 db.createCollection("users");
 
